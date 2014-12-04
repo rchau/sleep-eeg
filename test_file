@@ -38,7 +38,7 @@ def load_sleepdata(filename):
 #DATA, srate, stages = np.load('S3_REC.npz')
 
 #DATA, srate, stages = np.load('S4_BSL.npz')
-DATA, srate, stages = np.load('S4_REC.npz')
+DATA, srate, stages = load_sleepdata('S4_REC.npz')
 
 
 def bin_eeg(eeg, srate):
