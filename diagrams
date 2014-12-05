@@ -1,0 +1,76 @@
+# Code I prepared for the diagrams, unless Raghul is successful with the second version of diagrams
+
+from __future__ import division
+import numpy as np
+import matplotlib.pylab as plt
+import matplotlib.mlab as m
+
+
+# Frequency ###########################################
+N = 4
+pat1bsl = (20, 35, 30, 35) # replace with data set maximum Frequencies of NREM 2 sleep
+
+ind = np.arange(N)  # the x locations for the groups
+width = 0.35       # the width of the bars
+
+fig, ax = plt.subplots()
+rects1 = ax.bar(ind, pat1bsl, width, color='#66FF66') 
+
+pat2bsl = (30, 45, 40, 45) # replace with data set maximum Frequencies of NREM 2 sleep
+
+rects2 = ax.bar(ind+width, pat2bsl, width, color='#FFFF1A') 
+
+# add some text for labels, title and axes ticks
+ax.set_ylabel('Frequency (Hz)')
+ax.set_title('Maximum Frequency during NREM2 sleep')
+ax.set_xticks(ind+width)
+ax.set_xticklabels( ('Patient 1', 'Patient 2', 'Patient 3', 'Patient 4') )
+ax.set_ylim(0,50)
+ax.legend( (rects1[0], rects2[0]), ('Patient Baseline', 'Patient Sleep Deprived') )
+
+
+# Amplitude ##########################################
+N = 4
+pat1bsl = (20, 35, 30, 35) # replace with data set maximum Amplitudes of NREM 2 sleep
+
+ind = np.arange(N)  # the x locations for the groups
+width = 0.35       # the width of the bars
+
+fig, ax = plt.subplots()
+rects1 = ax.bar(ind, pat1bsl, width, color='#FF9933') 
+
+pat2bsl = (30, 45, 40, 45) # replace with data set maximum Amplitudes of NREM 2 sleep
+
+rects2 = ax.bar(ind+width, pat2bsl, width, color='#3399FF') 
+
+# add some text for labels, title and axes ticks
+ax.set_ylabel('Amplitude (uV)')
+ax.set_title('Maximum Amplitude during NREM2 sleep')
+ax.set_xticks(ind+width)
+ax.set_xticklabels( ('Patient 1', 'Patient 2', 'Patient 3', 'Patient 4') )
+ax.set_ylim(0,50)
+ax.legend( (rects1[0], rects2[0]), ('Patient Baseline', 'Patient Sleep Deprived') )
+
+
+# NREM 2 sleep duration ################################
+N = 4
+pat1bsl = (20, 35, 30, 35) # replace with data set maximum Sleep Duration of NREM 2 sleep
+
+
+ind = np.arange(N)  # the x locations for the groups
+width = 0.35       # the width of the bars
+
+fig, ax = plt.subplots()
+rects1 = ax.bar(ind, pat1bsl, width, color='#B00000')
+
+pat2bsl = (30, 45, 40, 45) # replace with data set maximum Sleep Duration of NREM 2 sleep
+
+rects2 = ax.bar(ind+width, pat2bsl, width, color='#663333') 
+
+# add some text for labels, title and axes ticks
+ax.set_ylabel('NREM 2 Sleep Duration (min)')
+ax.set_title('NREM 2 Sleep Duration')
+ax.set_xticks(ind+width)
+ax.set_xticklabels( ('Patient 1', 'Patient 2', 'Patient 3', 'Patient 4') )
+ax.set_ylim(0,50)
+ax.legend( (rects1[0], rects2[0]), ('Patient Baseline', 'Patient Sleep Deprived') )
