@@ -286,8 +286,8 @@ if __name__ == "__main__":
 
     print(np.shape(S1_BSL_cl))
    
-        #Classify data with logistic regression
-   x_train, y_train, x_test, y_test=divide_data(S1_BSL_cl, S1_BSL_NREM_stages, 0.6)
+    #Classify data with logistic regression
+    x_train, y_train, x_test, y_test=divide_data(S1_BSL_cl, S1_BSL_NREM_stages, 0.6)
     
     logreg=linear_model.LogisticRegression(C=1)
     logreg.fit(S1_BSL_cl,S1_BSL_NREM_stages)
