@@ -1,0 +1,80 @@
+plt.subplot(2,4,1)
+plt.text(1, 2.2,'Sleep Stages Duration', horizontalalignment='center', verticalalignment='top', fontsize=25, transform=ax.transAxes)
+labels = 'NREM 1', 'NREM 2', 'NREM 3','NREM 4', 'REM'
+pat1BSL = (96, 519, 60, 155, 243)
+colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral', 'lightseagreen']
+explode = (0, 0.1, 0, 0, 0)
+
+plt.pie(pat1BSL, explode=explode, labels=labels, colors=colors,
+        autopct='%1.1f%%', shadow=True, startangle=90)
+plt.axis('equal')
+plt.title('Subject 1', fontsize=15)
+
+
+plt.subplot(2,4,2)      
+pat2BSL =(117, 610, 23, 129, 214)
+explode = (0, 0.1, 0, 0, 0) 
+
+plt.pie(pat2BSL, explode=explode, colors=colors,
+        autopct='%1.1f%%', shadow=True, startangle=90)       
+plt.axis('equal')
+plt.title('Subject 2', fontsize=15)
+
+plt.subplot(2,4,3)      
+pat3BSL =(132, 518, 61, 153, 223)
+explode = (0, 0.1, 0, 0, 0) 
+
+plt.pie(pat3BSL, explode=explode, colors=colors,
+        autopct='%1.1f%%', shadow=True, startangle=90)       
+plt.axis('equal')
+plt.title('Subject 3', fontsize=15)
+
+plt.subplot(2,4,4)      
+pat4BSL =(63, 691, 13, 202, 156)
+explode = (0, 0.1, 0, 0, 0) 
+
+plt.pie(pat4BSL, explode=explode, colors=colors,
+        autopct='%1.1f%%', shadow=True, startangle=90)       
+plt.axis('equal')
+plt.title('Subject 4', fontsize=15)
+
+plt.subplot(2,4,5)
+pat1REC = (133, 940, 48, 341, 433)
+explode = (0, 0.1, 0, 0, 0) 
+
+plt.pie(pat1REC, explode=explode, labels=labels, colors=colors,
+        autopct='%1.1f%%', shadow=True, startangle=90)
+plt.axis('equal')
+
+
+
+plt.subplot(2,4,6)      
+pat2REC = (56, 1140, 21, 250, 361)
+explode = (0, 0.1, 0, 0, 0) 
+
+plt.pie(pat2REC, explode=explode, colors=colors,
+        autopct='%1.1f%%', shadow=True, startangle=90)       
+plt.axis('equal')
+
+
+plt.subplot(2,4,7)      
+pat3REC = (157, 967, 75, 341, 499)
+explode = (0, 0.1, 0, 0, 0) 
+
+plt.pie(pat3REC, explode=explode, colors=colors,
+        autopct='%1.1f%%', shadow=True, startangle=90)       
+plt.axis('equal')
+
+plt.subplot(2,4,8)      
+pat4REC = (42, 961, 44, 316, 183)
+explode = (0, 0.1, 0, 0, 0) 
+plt.pie(pat4REC, explode=explode, colors=colors,
+        autopct='%1.1f%%', shadow=True, startangle=90)       
+plt.axis('equal')
+
+plt.text(0, 2,'Baseline', horizontalalignment='left', verticalalignment='center', fontsize=24, transform=ax.transAxes)
+plt.text(0, 1,'Sleep Deprived', horizontalalignment='left', verticalalignment='center', fontsize=24, transform=ax.transAxes)
+plt.text(0, 0.15,'                           Averaged sleepstage increase (%): NREM1 = -4%, NREM2 = +2%, NREM3 = -1%, NREM4 = +3%, REM = +1%', horizontalalignment='left', verticalalignment='center', fontsize=15, transform=ax.transAxes)
+plt.text(0, 0,'                           Averaged sleepstage increase (mins): NREM1 = -2, NREM2 = +209, NREM3 = +4, NREM4 = +76, REM = +80', horizontalalignment='left', verticalalignment='center', fontsize=15, transform=ax.transAxes)
+
+plt.show()
