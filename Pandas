@@ -1,0 +1,16 @@
+import numpy as np
+import matplotlib.pylab as plt
+import matplotlib.mlab as m
+import pandas as pd
+
+def load_sleepdata(filename):
+
+    data = np.load(filename)
+
+    return data['DATA'], int(data['srate']), data['stages']
+
+
+DATA, srate, stages = load_sleepdata('S1_BSL.npz')
+
+
+df = pd.DataFrame({'eeg1' : [DATA[0]],'eeg2' : [DATA[1]],'eeg3' : [DATA[2]],'eeg4' : [DATA[3]],'righteye' : [DATA[4]],...})
