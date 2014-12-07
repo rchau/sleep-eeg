@@ -1,0 +1,104 @@
+#
+#  NAME
+#    sleep_data.py
+#
+#  
+#
+from __future__ import division
+import os
+import numpy as np
+import matplotlib.pylab as plt
+import matplotlib.mlab as m
+from scipy import signal
+from matplotlib import font_manager as fm
+import random
+
+def load_stages(filename):
+    """
+    load_stages takes the file name and reads in the stages data.  It returns an
+    array containing the correct stages (one for each 30s epoch)
+    """
+    data = np.load(filename)
+    return data['stages']
+
+def plot_stages(stages1, stages2, stages3, stages4):
+    time1=np.linspace(0,10,np.shape(stages1)[0])
+    time2=np.linspace(0,10,np.shape(stages2)[0])
+    time3=np.linspace(0,10,np.shape(stages3)[0])
+    time4=np.linspace(0,10,np.shape(stages4)[0])
+    f,axarr=plt.subplots(4,sharex=True, sharey=True)
+    axarr[0].plot(time1,stages1)
+    plt.title('Sleep Stages after Sleep deprivation')
+    plt.ylabel('sleep stage')
+    plt.ylim(0.5,5.5)
+    axarr[1].plot(time2,stages2)
+    plt.ylabel('sleep stage')
+    plt.ylim(0.5,5.5)
+    axarr[2].plot(time3,stages3)
+    plt.ylabel('sleep stage')
+    plt.ylim(0.5,5.5)
+    axarr[3].plot(time4,stages4)
+    plt.ylabel('sleep stage')
+    plt.ylim(0.5,5.5)
+    plt.xlabel('Time (hours)')
+    plt.show()
+
+def plot_per(sleep):
+    a=np.shape(sleep)[0]
+    fract_array=np.ones((4,a))
+    fig,ax=plt.subplots(2,4,figsize=(10,5))
+    labels = 'Stage 1', 'Stage 2', 'Stage 3', 'REM'
+    for i in range(a) :
+        fract_array[:,i]=np.round(comp_stage_per(sleep[i])*100)
+        patches, texts, autotexts=ax[i%2,i/2].pie(fract_array[:,i],labels=labels, autopct='%1.1f%%',labeldistance=1.1)
+        ax[i%2,i/2].tick_params(axis='both', which='major', labelsize=8)
+        proptease = fm.FontProperties()
+        proptease.set_size('x-small')
+        plt.setp(autotexts, fontproperties=proptease)
+        plt.setp(texts, fontproperties=proptease)
+        for j in range(4):
+            texts[j].set_fontsize(8)
+   # per_s1_rec=np.round(comp_stage_per(s1_rec)*100)
+    
+    proptease = fm.FontProperties()
+    proptease.set_size('xx-small')
+    plt.setp(autotexts, fontproperties=proptease)
+    plt.setp(texts, fontproperties=proptease)
+
+# The slices will be ordered and plotted counter-clockwise.
+     
+    #s1_bsl_graph=ax[0].pie(per_s1_bsl, labels=labels, autopct='%1.1f%%',labeldistance=1.08)
+    #s1_bsl_graph=ax[1].pie(per_s1_rec, labels=labels, autopct='%1.1f%%',labeldistance=1.08)                       
+    #for pie_wedge in s1_bsl_graph[0]:
+     #   pie_wedge.set_edgecolor('white')
+    
+    ax[0,0].set_title("Subject 1",bbox={'facecolor':'0.8', 'pad':5})
+    ax[0,1].set_title("Subject 2",bbox={'facecolor':'0.8', 'pad':5})
+    ax[0,2].set_title("Subject 3",bbox={'facecolor':'0.8', 'pad':5})
+    ax[0,3].set_title("Subject 4",bbox={'facecolor':'0.8', 'pad':5})                   
+
+    plt.show()
+
+def compare_stages(stages):
+    """
+    This function returns the times spent in the different stages of sleep
+    """
+    times=np.ones((7))
+    for i in range(7):
+        times[i]=(np.shape(np.where(stages==i))[1])*30
+    return times
+def comp_stage_per(stages):
+    """
+    This function returns the times spent in the different stages of sleep
+    """
+    times=np.ones((5))
+    awake=np.shape(np.where(stages==0))[1]*30
+    unscored=np.shape(np.where(stages==7))[1]*30
+    sleep_time=np.shape(stages)[0]*30-awake-unscored
+    for i in xrange(1,6) :
+        times[i-1]=((np.shape(np.where(stages==i))[1])*30)/sleep_time
+    times[2]=times[2]+times[3]
+    times[3]=times[4]
+    times=np.delete(times,4)
+    
+    return times
