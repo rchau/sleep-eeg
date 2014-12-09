@@ -16,6 +16,8 @@ from matplotlib import font_manager as fm
 import random
 from sklearn import linear_model
 from sklearn import cross_validation
+from sklearn.decomposition import PCA
+from sklearn import svm
 
 def plot_comp(s1_bsl, s2_bsl, s1_rec, s2_rec):
     """
@@ -260,7 +262,8 @@ if __name__ == "__main__":
         S1_BSL_stages=data['stages']
         
     #separte into different parts
-    S1_BSL_eeg=S1_BSL[0:4,:]
+    #S1_BSL_eeg=S1_BSL[0:4,:]
+    S1_BSL_eeg=np.insert(np.array(S1_BSL[0:2,:]), 2, np.array(S1_BSL[7:9,:]), 0)
     S1_BSL_Pxx=np.zeros((4,len(S1_BSL_stages),257))
     S1_BSL_NREM_stages=get_NREM_stages(S1_BSL_stages)
     S1_BSL_NREM=np.zeros((4,len(S1_BSL_NREM_stages),257))
@@ -284,8 +287,8 @@ if __name__ == "__main__":
     S1_BSL_cl=prepare_data(S1_BSL_NREM)
     #freq_test=np.append(freq[0:20], freq[40:60])
 
-    print(np.shape(S1_BSL_cl))
-   
+    print('S1_BSL_cl shape: ' + str(np.shape(S1_BSL_cl)))
+    
     #Classify data with logistic regression
     x_train, y_train, x_test, y_test=divide_data(S1_BSL_cl, S1_BSL_NREM_stages, 0.6)
     
@@ -294,5 +297,17 @@ if __name__ == "__main__":
     theta=logreg.coef_
     logreg.score(S1_BSL_cl,S1_BSL_NREM_stages)
     print(logreg.score(S1_BSL_cl,S1_BSL_NREM_stages))
+    print('Logistic Regression: ' + str(score))
 
+    #PCA
+    pca=PCA(n_components=36, whiten=True)
+    S1_NREM_PCA=pca.fit_transform(S1_BSL_cl)
+
+    #SVM
+    clf = svm.SVC(kernel='rbf')
+    clf.fit(S1_NREM_PCA,S1_BSL_NREM_stages)
+    clf.predict(S1_NREM_PCA)
+    score = clf.score(S1_NREM_PCA,S1_BSL_NREM_stages)
+    print('SVM: ' + str(score))
+    
  
