@@ -1,0 +1,198 @@
+from __future__ import division
+import numpy as np
+import matplotlib.pylab as plt
+import matplotlib.mlab as m
+
+'''
+This code allowed me to visualize and compare the various amplitudes from eeg muscles and eyes muscles. 
+By overlapping them I was able to see if abnormally high Amplitudes, not caused by muscles, were to be found.
+
+Feel free to view all channels and search for abnormaly high Amplitudes which are not caused by eye muscles and let us know.
+
+To do so just change the variables: eeg1 to eeg2 etc... and file1 to file2 etc...
+
+As you change the variables don't forget to adjust the titles.
+
+Thanks!
+'''
+
+
+def load_sleepdata(filename):
+
+    data = np.load(filename)
+
+    return data['DATA'], int(data['srate']), data['stages']
+
+file1 = 'S1_BSL.npz'
+file2 = 'S1_REC.npz'
+file3 = 'S2_BSL.npz'
+file4 = 'S2_REC.npz'
+file5 = 'S3_BSL.npz'
+file6 = 'S3_REC.npz'
+file7 = 'S4_BSL.npz'
+file8 = 'S4_REC.npz'
+
+eeg1 = 0
+eeg2 = 1
+eeg3 = 7
+eeg4 = 8
+reye = 2 # right eye
+leye = 3 # left eye
+
+color1 = 'gold' # black, red, gold, lightskyblue
+color2 = 'black'
+color3 = 'lightskyblue'
+color4 = 'gray'
+
+title1 = 'Baseline1: eeg2-right occipital(yellow)/ right eye(black)'
+title2 = 'Sleep Deprived1: eeg2-right occipital(blue)/ right eye(black)'
+#title3 = 'Baseline1: eeg2-right occipital(yellow)/ right eye(black)'
+#title4 = 'Sleep Deprived1: eeg2-right occipital(blue)/ right eye(black)'
+#colors = ['yellowgreen' 'gold', 'lightskyblue', 'lightcoral', 'lightseagreen']
+
+
+####  Baseline  ####
+## - eeg 1 - ##
+
+DATABSL, srate, stages = load_sleepdata(file1)
+#plt.subplot(2,8,3)
+plt.figure(1) # eeg1 BSL
+Pxx, freqs = m.psd(DATABSL[eeg2],NFFT=512,Fs=srate)
+t = np.arange(0, DATABSL[eeg2].size)
+y = DATABSL[eeg2]
+plt.plot(t, y, color=color1)
+plt.tick_params(axis='both',which='major', labelsize=16) 
+#plt.xlabel('Samples', fontsize=26)
+#plt.ylabel('Amplitude', fontsize=26)
+plt.ylim(-3000, 3000)
+plt.title('Baseline: Subject 1 - eeg2', fontsize=28)
+
+## - BSL muscle - ##
+#plt.subplot(2,8,1)
+plt.figure(2) # left eye
+Pxx, freqs = m.psd(DATABSL[leye],NFFT=512,Fs=srate)
+t = np.arange(0, DATABSL[leye].size)
+y = DATABSL[leye]
+plt.plot(t, y, color=color2)
+plt.tick_params(axis='both',which='major', labelsize=16)
+plt.ylim(-3000, 3000)
+plt.title('Baseline: Subject 1 - left eye', fontsize=28)
+
+#plt.subplot(2,8,2)
+plt.figure(3) # right eye 
+Pxx, freqs = m.psd(DATABSL[reye],NFFT=512,Fs=srate)
+t = np.arange(0, DATABSL[reye].size)
+y = DATABSL[reye]
+plt.plot(t, y, color=color2)
+plt.tick_params(axis='both',which='major', labelsize=16)
+plt.ylim(-3000, 3000)
+plt.title('Baseline: Subject 1 - right eye', fontsize=28)
+
+#plt.subplot(2,8,4)
+plt.figure(4) # eeg1 BSL
+Pxx, freqs = m.psd(DATABSL[eeg2],NFFT=512,Fs=srate)
+t = np.arange(0, DATABSL[eeg2].size)
+y = DATABSL[eeg2]
+plt.plot(t, y, color=color1)
+plt.tick_params(axis='both',which='major', labelsize=16) 
+plt.xlabel('Samples', fontsize=26)
+plt.ylabel('Amplitude', fontsize=26)
+plt.ylim(-3000, 3000)
+plt.title(title1, fontsize=28)
+
+## - BSL muscle - ##
+plt.figure(4) # left eye BSL
+Pxx, freqs = m.psd(DATABSL[reye],NFFT=512,Fs=srate)
+t = np.arange(0, DATABSL[reye].size)
+y = DATABSL[reye]
+plt.ylim(-3000, 3000)
+plt.plot(t, y, color=color2)
+
+####  Sleep Deprived ####
+## - eeg 1 - ##
+
+DATAREC, srate, stages = load_sleepdata(file2)
+#plt.subplot(2,8,7)
+plt.figure(5)
+Pxx, freqs = m.psd(DATAREC[eeg2],NFFT=512,Fs=srate)
+t = np.arange(0, DATAREC[eeg2].size)
+y = DATAREC[eeg2]
+plt.plot(t, y, color=color3)
+plt.tick_params(axis='both',which='major', labelsize=16) # , which='major'
+#plt.xlabel('Samples', fontsize=26)
+#plt.ylabel('Amplitude', fontsize=26)
+plt.ylim(-3000, 3000)
+plt.title('Sleep Deprived: Subject 1 - eeg2', fontsize=28)
+
+## - REC muscle - ##
+#plt.subplot(2,8,5)
+plt.figure(6)
+Pxx, freqs = m.psd(DATAREC[leye],NFFT=512,Fs=srate)
+t = np.arange(0, DATAREC[leye].size)
+y = DATAREC[leye]
+plt.plot(t, y, color=color2)
+plt.tick_params(axis='both',which='major', labelsize=16)
+plt.ylim(-3000, 3000)
+plt.title('Sleep Deprived: Subject 1 - left eye', fontsize=28)
+
+#plt.subplot(2,8,6)
+plt.figure(7)
+Pxx, freqs = m.psd(DATAREC[reye],NFFT=512,Fs=srate)
+t = np.arange(0, DATAREC[reye].size)
+y = DATAREC[reye]
+plt.plot(t, y, color=color2)
+plt.tick_params(axis='both',which='major', labelsize=16)
+plt.ylim(-3000, 3000)
+plt.title('Sleep Deprived: Subject 1 - right eye', fontsize=28)
+
+
+## - eeg 1 - ##
+#plt.subplot(2,8,8)
+plt.figure(8)
+Pxx, freqs = m.psd(DATAREC[eeg2],NFFT=512,Fs=srate)
+t = np.arange(0, DATAREC[eeg2].size)
+y = DATAREC[eeg2]
+plt.plot(t, y, color=color3)
+plt.tick_params(axis='both',which='major', labelsize=16) # , which='major'
+plt.xlabel('Samples', fontsize=26)
+plt.ylabel('Amplitude', fontsize=26)
+plt.ylim(-3000, 3000)
+plt.title(title2, fontsize=28)
+
+plt.figure(8)
+Pxx, freqs = m.psd(DATAREC[reye],NFFT=512,Fs=srate)
+t = np.arange(0, DATAREC[reye].size)
+y = DATAREC[reye]
+plt.plot(t, y, color=color2)
+plt.tick_params(axis='both',which='major', labelsize=16)
+plt.ylim(-3000, 3000)
+
+###
+
+
+'''
+Channels information:
+DATA[0] = eeg1
+DATA[1] = eeg2
+DATA[7] = eeg3
+DATA[8] = eeg4
+DATA[2] = righteye
+DATA[3] = lefteye
+DATA[4] = Chin1
+DATA[5] = Chin2
+DATA[6] = Chin3
+
+Channel 1:         C3/A2 = DATA[0]
+Channel 2:         O2/A1 = DATA[1]
+Channel 8:         C4/A1 = DATA[2] OR DATA[7]?
+Channel 9:         O1/A2  = DATA[3] OR DATA[8]?
+                       
+EOG Channels: 
+Channel 3:         ROC/A2 = DATA[4] OR DATA[2]?
+Channel 4:         LOC/A1 = DATA[5] OR DATA[3]?
+EMG Channels: 
+Channel 5:         Chin EMG 1 = DATA[6] OR DATA[4]?
+Channel 6:         Chin EMG 2 = DATA[7] OR DATA[5]?
+Channel 7:         Chin EMG 3 = DATA[8] OR DATA[6]?
+
+'''
